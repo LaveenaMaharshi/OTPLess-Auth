@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Otpless React Demo</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+    <script
+      id="otpless-sdk"
+      src="https://otpless.com/v4/headless.js"
+      data-appid="FC78YQZMYDV1Q0N13NDZ"
+    ></script>
+    <script>
+      window.addEventListener('load', function() {
+        const callback = (eventCallback) => {
+          const ONETAP = () => {
+            const { response } = eventCallback;
+            const token = response.token;
+            console.log({ response, token });
+            window.dispatchEvent(new CustomEvent('otpless-login', { 
+              detail: { response, token } 
+            }));
+          };
+
+          const OTP_AUTO_READ = () => {
+            const { response: { otp } } = eventCallback;
+            console.log({ otp });
+          };
+
+          const FAILED = () => {
+            const { response } = eventCallback;
+            console.log({ response });
+          };
+
+          const FALLBACK_TRIGGERED = () => {
+            const { response } = eventCallback;
+            console.log({ response });
+          };
+
+          const EVENTS_MAP = {
+            ONETAP,
+            OTP_AUTO_READ,
+            FAILED,
+            FALLBACK_TRIGGERED
+          };
+
+          if ("responseType" in eventCallback) EVENTS_MAP[eventCallback.responseType]();
+        };
+
+        // Initialize OTPLESS SDK with the defined callback
+        window.OTPlessSignin = new OTPless(callback);
+      });
+    </script>
+  </body>
+</html> 
