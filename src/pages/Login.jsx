@@ -19,9 +19,9 @@ const Login = () => {
         <div className="mt-4 text-center">
           <p className="text-muted small">
             By logging in, you agree to our{' '}
-            <a href="#" className="text-primary text-decoration-none">Terms of Service</a> {' '}
+            <a href="www.otpless.com" className="text-primary text-decoration-none">Terms of Service</a> {' '}
             and {' '}
-            <a href="#" className="text-primary text-decoration-none">Privacy Policy</a>
+            <a href="www.otpless.com" className="text-primary text-decoration-none">Privacy Policy</a>
           </p>
         </div>
 
